@@ -2,9 +2,9 @@ package com.example.dietapps.di
 
 import android.app.Application
 import androidx.room.Room
-import com.example.dietapps.data.ConditionDB
-import com.example.dietapps.data.ConditionRepository
-import com.example.dietapps.data.ConditionRepositoryImp
+import com.example.dietapps.data.AppDatabase
+import com.example.dietapps.data.ConsumptionRepository
+import com.example.dietapps.data.ConsumptionRepositoryImplementation
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,17 +16,18 @@ import javax.inject.Singleton
 object AppModule {
     @Provides
     @Singleton
-    fun provideConditionDB(app: Application): ConditionDB{
+    fun provideAppDatabase(app:Application): AppDatabase{
         return Room.databaseBuilder(
             app,
-            ConditionDB::class.java,
-            "condition_db"
+            AppDatabase::class.java,
+            "app_db"
         ).build()
     }
 
     @Provides
     @Singleton
-    fun provideConditionRepository(db: ConditionDB): ConditionRepository{
-        return ConditionRepositoryImp(db.dao)
+    fun provideConsumptionRepository(db:AppDatabase):ConsumptionRepository{
+        return ConsumptionRepositoryImplementation(db.dao)
     }
+
 }
